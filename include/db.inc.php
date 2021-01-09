@@ -12,7 +12,7 @@
 				*
 				*/
 				function dbConnect($dbname=DB_NAME) {
-if(DEBUG_DB)	echo "<p class='debugDb'><b>Line " . __LINE__ . ":</b> Versuche mit der DB <b>$dbname</b> zu verbinden... <i>(" . basename(__FILE__) . ")</i></p>\r\n";					
+//if(DEBUG_DB)	echo "<p class='debugDb'><b>Line " . __LINE__ . ":</b> Versuche mit der DB <b>$dbname</b> zu verbinden... <i>(" . basename(__FILE__) . ")</i></p>\r\n";					
 					
 					// EXCEPTION-HANDLING (Umgang mit Fehlern)
 					// Versuche, eine DB-Verbindung aufzubauen
@@ -25,12 +25,12 @@ if(DEBUG_DB)	echo "<p class='debugDb'><b>Line " . __LINE__ . ":</b> Versuche mit
 					// falls eine Fehlermeldung geworfen wurde, wird sie hier aufgefangen					
 					} catch(PDOException $error) {
 						// Ausgabe der Fehlermeldung
-if(DEBUG_DB)		echo "<p class='error'><b>Line " . __LINE__ . ":</b> <i>FEHLER: " . $error->GetMessage() . " </i> <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+//if(DEBUG_DB)		echo "<p class='error'><b>Line " . __LINE__ . ":</b> <i>FEHLER: " . $error->GetMessage() . " </i> <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 						// Skript abbrechen
 						exit;
 					}
 					// Falls das Skript nicht abgebrochen wurde (kein Fehler), geht es hier weiter
-if(DEBUG_DB)	echo "<p class='debugDb ok'><b>Line " . __LINE__ . ":</b> Erfolgreich mit der DB <b>$dbname</b> verbunden. <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+//if(DEBUG_DB)	echo "<p class='debugDb ok'><b>Line " . __LINE__ . ":</b> Erfolgreich mit der DB <b>$dbname</b> verbunden. <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 
 					// DB-Verbindungsobjekt zurückgeben
 					return $pdo;

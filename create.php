@@ -24,8 +24,14 @@
         $content= NULL;
         $description= NULL;
         $image= NULL;
+        $errorTitle=NULL;
+        $errorContent= NULL;
+        $errorDescription=NULL;
         $errorImageUpload = NULL;
         $dbError= false;
+        $dbErrorMessage=NULL;
+        $successMessage=NULL;
+        
 
 
 
@@ -34,7 +40,6 @@
             #*******************************************************#
             
         if( isset( $_POST['newRecipeForm'] ) ) {
-if(DEBUG)		echo "<p class='debug hint'>Line <b>" . __LINE__ . "</b>: Formular 'New recipe' wurde abgeschickt... <i>(" . basename(__FILE__) . ")</i></p>";	
            
 
                 // step-2
@@ -50,20 +55,17 @@ if(DEBUG)		echo "<p class='debug hint'>Line <b>" . __LINE__ . "</b>: Formular 'N
                 $errorDescription = checkInputString($recipe->getRec_description(), 4, 65000);
 
                 if( $errorTitle OR $errorContent OR $errorDescription ) {
-if(DEBUG)				echo "<p class='debug err'><b>Line " . __LINE__ . "</b>: Das Formular enthält noch Fehler! <i>(" . basename(__FILE__) . ")</i></p>\r\n";
   
                 } else {
                     //erfolgfall
-if(DEBUG)				echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Das Formular ist formal fehlerfrei ... <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+//if(DEBUG)				echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Das Formular ist formal fehlerfrei ... <i>(" . basename(__FILE__) . ")</i></p>\r\n";
                     // image upload
                     if( $_FILES['rec_image']['tmp_name'] != "" ) {
-if(DEBUG)				echo "<p class='debug hint'>Line <b>" . __LINE__ . "</b>: Bild Upload aktiv... <i>(" . basename(__FILE__) . ")</i></p>";
+//if(DEBUG)				echo "<p class='debug hint'>Line <b>" . __LINE__ . "</b>: Bild Upload aktiv... <i>(" . basename(__FILE__) . ")</i></p>";
  
                         $imageUploadResultArray = imageUpload($_FILES['rec_image']);
 
-// if(DEBUG)	echo "<pre class='debug'>Line <b>" . __LINE__ . "</b> <i>(" . basename(__FILE__) . ")</i>:<br>\r\n";					
-// if(DEBUG)	print_r($imageUploadResultArray);					
-// if(DEBUG)	echo "</pre>";
+
 
                     if( $imageUploadResultArray['imageError'] ) {
                         $errorImageUpload = $imageUploadResultArray['imageError'];
@@ -76,18 +78,16 @@ if(DEBUG)				echo "<p class='debug hint'>Line <b>" . __LINE__ . "</b>: Bild Uplo
 
                     } else {
 
- if(DEBUG)				echo "<p class='debug'>Line <b>" . __LINE__ . "</b>: there is no image uploaded. <i>(" . basename(__FILE__) . ")</i></p>";
+ //if(DEBUG)				echo "<p class='debug'>Line <b>" . __LINE__ . "</b>: there is no image uploaded. <i>(" . basename(__FILE__) . ")</i></p>";
                        
                     } //image upload
 
                 
                 // final form validation 
                 if( $errorImageUpload ) {
-if(DEBUG)				echo "<p class='debug err'>Line <b>" . __LINE__ . "</b>: Formular enthält noch Fehler (Imageupload)! <i>(" . basename(__FILE__) . ")</i></p>";
                    
                 }else {
 
-if(DEBUG)				echo "<p class='debug ok'>Line <b>" . __LINE__ . "</b>: Formular ist fehlerfrei. recipieintrag wird in DB gespeichert... <i>(" . basename(__FILE__) . ")</i></p>";
                    
 
                         #**************new recipie Savo to db********#
@@ -97,22 +97,18 @@ if(DEBUG)				echo "<p class='debug ok'>Line <b>" . __LINE__ . "</b>: Formular is
 
                        #**** transaction start *****#
                        if( !$pdo->beginTransaction() ) {
-if(DEBUG)						echo "<p class='debug err'><b>Line " . __LINE__ . "</b>: FEHLER beim Starten der Transaction! <i>(" . basename(__FILE__) . ")</i></p>\r\n";				
 
                          
 
                        }else {
                            //success
-if(DEBUG)						echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Transaction erfolgreich gestartet. <i>(" . basename(__FILE__) . ")</i></p>\r\n";									
                           #******* recipue anlegen *******#
 
                           if( !$recipe->saveToDb($pdo) ) {
-if(DEBUG)								echo "<p class='debug err'><b>Line " . __LINE__ . "</b>: FEHLER bei der Simulation des Schreibens des Nwe recipie-Datensatzes! <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 
                                 $dbError = true;
                           }else {
                               // success
-if(DEBUG)								echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Schreiben des new recipe-Datensatzes erfolgreich simuliert mit 'ID " . $recipe->getRec_id() . "'. <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 
 
 
@@ -120,7 +116,6 @@ if(DEBUG)								echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Schreib
 
                           if( $dbError ) {
                               // feheler
-if(DEBUG)							echo "<p class='debug err'><b>Line " . __LINE__ . "</b>: FEHLER bei der Simulation des Schreibvorgangs in die DB! <i>(" . basename(__FILE__) . ")</i></p>\r\n";				
 
                              $dbErrorMessage = "there is some error please try agin later";
 
@@ -128,24 +123,20 @@ if(DEBUG)							echo "<p class='debug err'><b>Line " . __LINE__ . "</b>: FEHLER 
 
                              if( !$pdo->rollback() ) {
                                  // feher
-if(DEBUG)								echo "<p class='debug err'><b>Line " . __LINE__ . "</b>: FEHLER beim Durchführen des Rollbacks! <i>(" . basename(__FILE__) . ")</i></p>\r\n";				
                               
                              }else {
                                  //suces
-if(DEBUG)								echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Rollback erfolgreich durchgeführt. <i>(" . basename(__FILE__) . ")</i></p>\r\n";										
 
                              }
                          
 
                             }else {
- if(DEBUG)							echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Schreibvorgang wurde erfolgreich simuliert. <i>(" . basename(__FILE__) . ")</i></p>\r\n";				
 
 
 
                                 // commit
                                 if( !$pdo->commit() ) {
                                     //fehler fall
-if(DEBUG)								echo "<p class='debug err'><b>Line " . __LINE__ . "</b>: FEHLER beim Durchführen des Commits! <i>(" . basename(__FILE__) . ")</i></p>\r\n";				
                                     $dbErrorMessage = "there is some error please try again later";
 
 
@@ -153,9 +144,10 @@ if(DEBUG)								echo "<p class='debug err'><b>Line " . __LINE__ . "</b>: FEHLER
                                 }else {
                                     //success
 
-if(DEBUG)								echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Commit erfolgreich durchgeführt. <i>(" . basename(__FILE__) . ")</i></p>\r\n";											
                                    
                                     $successMessage= "new recipie successfully inserted";
+
+                                    $recipe = new Recipe();
 
                                 } //commit
 
@@ -170,18 +162,6 @@ if(DEBUG)								echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Commit 
 
                 } //error checking-1
                 
-
-
-
-
-
-
-
-
-
-
-
-
 
         }// formular newe recipe end
 
@@ -205,34 +185,59 @@ if(DEBUG)								echo "<p class='debug ok'><b>Line " . __LINE__ . "</b>: Commit 
     <title>new recipie</title>
 
 
-     <!-- bootstrap css (bootswatch)-->
+     <!-- bootstrap css bootswatch-->
      <link rel="stylesheet" href="css/bootstrap.min.css">
-    <!-- debug css)-->
+    <!-- debug css-->
     <link rel="stylesheet" href="css/debug.css">
     
-    <!-- bootstrap css (bootswatch)-->
+    <!-- bootstrap css bootswatch-->
     <link rel="stylesheet" href="css/own.css">
 </head>
-<body>
+<body class="bg-light">
+
+<header>
+            <!-- Image and text -->
+                <nav class="navbar navbar-dark bg-primary">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="index.php">
+                    <img src="css/logo/logo.png" alt="" width="50" height="34" class="d-inline-block align-top">
+                    recipeApp
+                    </a> 
+                    <span class="text-end"> 
+                        <h3 class="text-info">Add your Recipe </h3>
+                    </span>
+                </div>
+                </nav>
+</header>
+
 
       <form action="" class="ownform" method="POST" enctype="multipart/form-data" >
+      
       <input type="hidden" name="newRecipeForm">
       
 
+        <?php if($successMessage): ?>
         <div class="form-group">
-        
+        <span class="text-success"><strong><?= $successMessage ?></strong></span><br>
+        <?php elseif($dbErrorMessage): ?>
+        <span class="text-danger"><strong><?= $dbErrorMessage ?><strong></span><br>
+        <?php endif ?>
+        <span class="text-danger"><?= $errorTitle ?></span><br>
         <input class="form-control mb-3" type="text" name="title" placeholder="title of your recipe">
         
         <label for="exampleTextarea">contents</label>
+        <span class="text-danger"><?= $errorContent ?></span><br>
         <textarea class="form-control mb-3" name="contant" rows="3" placeholder="incrediance"></textarea>
         
         <label for="exampleTextarea">description</label>
+        <span class="text-danger"><?= $errorDescription ?></span><br>
         <textarea class="form-control mb-3" name="description"  rows="3" placeholder="description"></textarea>
         
         <label for="InputFile">Upload recipe Image file</label>
+        <span class="text-danger"><?= $errorImageUpload ?></span><br>
         <input type="file" name="rec_image" class="form-control-file mt-2"  aria-describedby="fileHelp">
-        <small id="fileHelp" class="form-text text-muted">Accepted format jpg/jpeg/png/gif. max-size 256kb </small>
-        </div>
+        <small id="fileHelp" class="form-text text-muted">Accepted format jpg/jpeg/png/gif. max-size 256kb, max-width/hight 800px </small>
+        </div> <br>
         
         
         <input type="submit" class="btn btn-primary btn-lg" value="create">

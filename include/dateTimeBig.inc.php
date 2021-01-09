@@ -150,7 +150,7 @@ if(DEBUG_F)			echo "<p class='debugDateTime'><b>Line " . __LINE__ . "</b>: \$iso
 				*
 				*/
 				function validateDate($value) {
-if(DEBUG_F)		echo "<p class='debugDateTime'><b>Line  " . __LINE__ .  "</b>: Aufruf " . __FUNCTION__ . "($value) <i>(" . basename(__FILE__) . ")</i></p>\r\n";						
+// if(DEBUG_F)		echo "<p class='debugDateTime'><b>Line  " . __LINE__ .  "</b>: Aufruf " . __FUNCTION__ . "($value) <i>(" . basename(__FILE__) . ")</i></p>\r\n";						
 					
 					$day 		= NULL;
 					$month 	= NULL;
@@ -185,9 +185,9 @@ if(DEBUG_F)		echo "<p class='debugDateTime'><b>Line  " . __LINE__ .  "</b>: Aufr
 							$year 	= $dateArray[2];
 						}
 
-if(DEBUG_F)			echo "<pre class='debugDateTime'>Line <b>" . __LINE__ . "</b> <i>(" . basename(__FILE__) . ")</i>:<br>\r\n";					
-if(DEBUG_F)			print_r($dateArray);					
-if(DEBUG_F)			echo "</pre>";
+// if(DEBUG_F)			echo "<pre class='debugDateTime'>Line <b>" . __LINE__ . "</b> <i>(" . basename(__FILE__) . ")</i>:<br>\r\n";					
+// if(DEBUG_F)			print_r($dateArray);					
+// if(DEBUG_F)			echo "</pre>";
 						
 					}
 					

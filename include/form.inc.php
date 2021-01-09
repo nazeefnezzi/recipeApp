@@ -14,7 +14,7 @@
 				*
 				*/
 				function cleanString($value) {
-if(DEBUG_F)		echo "<p class='debugCleanString'><b>Line " . __LINE__ . "</b>: Aufruf " . __FUNCTION__ . "('$value') <i>(" . basename(__FILE__) . ")</i></p>\r\n";	
+//if(DEBUG_F)		echo "<p class='debugCleanString'><b>Line " . __LINE__ . "</b>: Aufruf " . __FUNCTION__ . "('$value') <i>(" . basename(__FILE__) . ")</i></p>\r\n";	
 					
 					// htmlspecialchars() entschärft HTML-Steuerzeichen wie < > & ""
 					// und ersetzt sie durch &lt;, &gt;, &amp;, &quot;
@@ -50,7 +50,7 @@ if(DEBUG_F)		echo "<p class='debugCleanString'><b>Line " . __LINE__ . "</b>: Auf
 				*	
 				*/
 				function checkInputString($value, $minLength=MIN_INPUT_LENGTH, $maxLength=MAX_INPUT_LENGTH) {
-if(DEBUG_F)		echo "<p class='debugCheckInputString'><b>Line " . __LINE__ . "</b>: Aufruf " . __FUNCTION__ . "('$value [$minLength | $maxLength]') <i>(" . basename(__FILE__) . ")</i></p>\r\n";					
+//if(DEBUG_F)		echo "<p class='debugCheckInputString'><b>Line " . __LINE__ . "</b>: Aufruf " . __FUNCTION__ . "('$value [$minLength | $maxLength]') <i>(" . basename(__FILE__) . ")</i></p>\r\n";					
 					
 					$errorMessage = NULL;
 					
@@ -78,36 +78,7 @@ if(DEBUG_F)		echo "<p class='debugCheckInputString'><b>Line " . __LINE__ . "</b>
 
 #**********************************************************************************#
 
-				
-				/**
-				*
-				*	Prüft eine Email-Adresse auf Leerstring und Validität
-				*
-				*	@param String $value - Die zu prüfende Email-Adresse
-				*
-				*	@return String/NULL - Ein String bei Fehler, ansonsten NULL
-				*
-				*/
-				function checkEmail($value) {
-if(DEBUG_F)		echo "<p class='debugCheckEmail'><b>Line " . __LINE__ . "</b>: Aufruf " . __FUNCTION__ . "('$value') <i>(" . basename(__FILE__) . ")</i></p>\r\n";					
-					
-					$errorMessage = NULL;
-					
-					// Prüfen auf leeres Feld/Prüfen auf Leerstring
-					if( !$value ) {
-						// Fehlermeldung generieren
-						$errorMessage = "Dies ist ein Pflichtfeld!";
-						
-					// Email auf Validität prüfen	
-					} elseif( !filter_var($value, FILTER_VALIDATE_EMAIL) ) {
-						// Fehlermeldung generieren
-						$errorMessage = "Dies ist keine gültige Email-Adresse!";
-					}										
-					
-					// Fehlermeldung zurückgeben
-					return $errorMessage;
 
-				}
 
 
 #**********************************************************************************#
@@ -137,7 +108,7 @@ if(DEBUG_F)		echo "<p class='debugCheckEmail'><b>Line " . __LINE__ . "</b>: Aufr
 												$allowedMimeTypes		= IMAGE_ALLOWED_MIMETYPES,
 												$uploadPath				= IMAGE_UPLOAD_PATH
 											) {
-if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: Aufruf " . __FUNCTION__ . "() <i>(" . basename(__FILE__) . ")</i></p>\r\n";	
+//if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: Aufruf " . __FUNCTION__ . "() <i>(" . basename(__FILE__) . ")</i></p>\r\n";	
 /*					
 if(DEBUG_F)		echo "<pre class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \r\n";					
 if(DEBUG_F)		print_r($uploadedImage);					
@@ -178,10 +149,10 @@ if(DEBUG_F)		echo "</pre>\r\n";
 					// Temporärer Pfad auf dem Server
 					$fileTemp = $uploadedImage['tmp_name'];
 					
-if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$fileName: $fileName <i>(" . basename(__FILE__) . ")</i></p>\r\n";
-if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$fileSize: ". round($fileSize/1024, 2) . "kB <i>(" . basename(__FILE__) . ")</i></p>\r\n";
-if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$fileTemp: $fileTemp <i>(" . basename(__FILE__) . ")</i></p>\r\n";
-if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$fileTarget: $fileTarget <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+// if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$fileName: $fileName <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+// if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$fileSize: ". round($fileSize/1024, 2) . "kB <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+// if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$fileTemp: $fileTemp <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+// if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$fileTarget: $fileTarget <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 					
 					// genauere Informationen zum Bild holen
 					$imageData = @getimagesize($fileTemp);
@@ -204,9 +175,9 @@ if(DEBUG_F)		echo "</pre>\r\n";
 					$imageWidth 	= $imageData[0];
 					$imageHeight 	= $imageData[1];
 					$imageMimeType = $imageData['mime'];
-if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$imageWidth: $imageWidth px <i>(" . basename(__FILE__) . ")</i></p>\r\n";
-if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$imageHeight: $imageHeight px <i>(" . basename(__FILE__) . ")</i></p>\r\n";
-if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$imageMimeType: $imageMimeType <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+// if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$imageWidth: $imageWidth px <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+// if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$imageHeight: $imageHeight px <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+// if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$imageMimeType: $imageMimeType <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 					
 					
 					#********** BILD PRÜFEN **********#
@@ -239,24 +210,24 @@ if(DEBUG_F)		echo "<p class='debugImageUpload'><b>Line " . __LINE__ . "</b>: \$i
 					#********** ABSCHLIESSENDE BILDPRÜFUNG **********#
 					if( $errorMessage ) {
 						// Fehlerfall
-if(DEBUG_F)			echo "<p class='debugImageUpload err'><b>Line " . __LINE__ . "</b>: $errorMessage <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+//if(DEBUG_F)			echo "<p class='debugImageUpload err'><b>Line " . __LINE__ . "</b>: $errorMessage <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 						// Im Fehlerfall den Zielpfad löschen
 						$fileTarget	= NULL;
 						
 					} else {
 						// Erfolgsfall
-if(DEBUG_F)			echo "<p class='debugImageUpload ok'><b>Line " . __LINE__ . "</b>: Die Bildprüfung ergab keine Fehler. <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+//if(DEBUG_F)			echo "<p class='debugImageUpload ok'><b>Line " . __LINE__ . "</b>: Die Bildprüfung ergab keine Fehler. <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 						
 						
 						#********** BILD SPEICHERN **********#
 						if( !@move_uploaded_file($fileTemp, $fileTarget) ) {
 							// Fehlerfall
-if(DEBUG_F)				echo "<p class='debugImageUpload err'><b>Line " . __LINE__ . "</b>: Fehler beim Speichern des Bildes auf dem Server! <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+//if(DEBUG_F)				echo "<p class='debugImageUpload err'><b>Line " . __LINE__ . "</b>: Fehler beim Speichern des Bildes auf dem Server! <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 							$errorMessage 	= "Fehler beim Speichern des Bildes! Bitte versuchen Sie es später noch einmal.";
 							
 						} else {
 							// Erfolgsfall
-if(DEBUG_F)				echo "<p class='debugImageUpload ok'><b>Line " . __LINE__ . "</b>: Bild wurde erfolgreich auf dem Server gespeichert. <i>(" . basename(__FILE__) . ")</i></p>\r\n";
+//if(DEBUG_F)				echo "<p class='debugImageUpload ok'><b>Line " . __LINE__ . "</b>: Bild wurde erfolgreich auf dem Server gespeichert. <i>(" . basename(__FILE__) . ")</i></p>\r\n";
 							
 						} // BILD SPEICHERN ENDE
 						

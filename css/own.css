@@ -9,3 +9,21 @@
     
     margin:25px auto auto auto;
 }
+
+.own-img {
+    width: 200px;
+    height: 200px;
+    padding: 2px;
+    border-radius: 15px;
+}
+
+.owncard {
+    height: 210px;
+    overflow: hidden;
+    padding: 5px;
+}
+
+
+.ownhead {
+    color: blue;
+}
