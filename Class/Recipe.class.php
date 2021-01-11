@@ -155,7 +155,7 @@
             public static function fetchAllRecipe($pdo) {
 //if(DEBUG_C)			echo "<h3 class='debugClass'><b>Line " . __LINE__ .  "</b>: Aufruf " . __METHOD__ . "() (<i>" . basename(__FILE__) . "</i>)</h3>\r\n";
 
-                $sql="SELECT * FROM recipes";
+                $sql="SELECT * FROM recipes ORDER BY rec_date DESC";
                 $params=NULL;
 
                 $statement = $pdo->prepare($sql);
@@ -202,7 +202,6 @@
         public static function fetchSortedDb($pdo) {
 
 
-            if(DEBUG_C)			echo "<h3 class='debugClass'><b>Line " . __LINE__ .  "</b>: Aufruf " . __METHOD__ . "() (<i>" . basename(__FILE__) . "</i>)</h3>\r\n";
 
                 $sql = "SELECT * FROM recipes ORDER BY rec_title ASC";
                 $params=NULL;
