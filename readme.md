@@ -26,8 +26,8 @@
     
 ## indtroduction - Recipe Application
 
-* its a php based recipe application. that you can create your recipies and serve to users.
-user can search and sort to alphabetic order. The Technoilogy i used php, mysql, vanilla javascript, bootstrap for stylesheet, html5. 
+* It's a php based recipe application, that you can create your recipies and serve to users.
+Users can search and sort the recipes alphabetical order. The Technologies i used to create this application php, mysql, vanilla javascript, bootstrap for stylesheet and html5. 
 
 
  
